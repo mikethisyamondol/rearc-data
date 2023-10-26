@@ -29,7 +29,7 @@ jobs:
         AWS_DEFAULT_REGION: us-east-2
       run: |
         aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 359409690900.dkr.ecr.us-east-2.amazonaws.com
-        docker build -t bls-ingest ./bls
-        docker tag bls-ingest:latest 359409690900.dkr.ecr.us-east-2.amazonaws.com/bls:latest
+        docker build -t bls ./bls
+        docker tag bls:latest 359409690900.dkr.ecr.us-east-2.amazonaws.com/bls:latest
         docker push 359409690900.dkr.ecr.us-east-2.amazonaws.com/bls:latest
         aws lambda update-function-code --function-name bls-ingest --image-uri 359409690900.dkr.ecr.us-east-2.amazonaws.com/bls:latest

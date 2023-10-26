@@ -15,7 +15,7 @@ def lambda_handler(event, context):
     bucketname = 'mthis-rearc'
     prefix = 'bls_data/'
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers) 
     html = response.text  
     soup = BeautifulSoup(html, "lxml")
     regex = re.compile('.*/pub/time.series/.*')

@@ -28,11 +28,8 @@ jobs:
         AWS_PROFILE: default
         AWS_DEFAULT_REGION: us-east-2
       run: |
-        aws s3 cp ./datausa/datausa_lambda_function.zip s3://mthis-rearc/datausa/datausa_lambda_function.zip
-        aws lambda update-function-code --function-name datausa-ingest --s3-bucket mthis-rearc --s3-key datausa/datausa_lambda_function.zip --region us-east-2
-
         aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 359409690900.dkr.ecr.us-east-2.amazonaws.com
-        docker build -t datausa-ingest ./datausa
-        docker tag datausa-ingest:latest 359409690900.dkr.ecr.us-east-2.amazonaws.com/datausa:latest
+        docker build -t datausa ./datausa
+        docker tag datausa:latest 359409690900.dkr.ecr.us-east-2.amazonaws.com/datausa:latest
         docker push 359409690900.dkr.ecr.us-east-2.amazonaws.com/datausa:latest
         aws lambda update-function-code --function-name datausa-ingest --image-uri 359409690900.dkr.ecr.us-east-2.amazonaws.com/datausa:latest
