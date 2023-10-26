@@ -17,6 +17,7 @@ def connect_to_endpoint(url):
 
 
 def lambda_handler(event, context):
+    prefix = 'datausa/'
     api = 'https://datausa.io/api/data?drilldowns=Nation&measures=Population&year=latest'
     filename = 'us_pop_data'
 
@@ -29,7 +30,7 @@ def lambda_handler(event, context):
     df.to_csv(f"{filename}.csv", index=False)
 
     s3 = boto3.resource('s3')    
-    s3.Bucket(bucketname).upload_file(filename, prefix+filename)
+    s3.Bucket(bucketname).upload_file('/tmp/'+filename, prefix+filename)
 
     return {
             'statusCode': 200,
