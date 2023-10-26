@@ -16,13 +16,7 @@ jobs:
           mkdir ./.aws
           touch ./.aws/credentials
           echo '${{ secrets.AWS_CREDENTIALS_FILE }}' > ./.aws/credentials
-    - name: zip
-      run: |
-          cd bls
-          pip install --target . requests
-          zip -r bls_lambda_function.zip *
-
-    - name: sync to s3
+    - name: ecr
       env:
         AWS_SHARED_CREDENTIALS_FILE: ./.aws/credentials
         AWS_PROFILE: default
