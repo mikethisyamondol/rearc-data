@@ -17,6 +17,7 @@ def connect_to_endpoint(url):
 
 
 def lambda_handler(event, context):
+    bucketname = 'mthis-rearc'
     prefix = 'datausa/'
     api = 'https://datausa.io/api/data?drilldowns=Nation&measures=Population&year=latest'
     filename = 'us_pop_data'
