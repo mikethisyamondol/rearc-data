@@ -16,7 +16,7 @@ def lambda_handler(event, context):
     prefix = 'bls_data/'
 
     response = requests.get(url, headers=headers)
-    html = response.text 
+    html = response.text  
     soup = BeautifulSoup(html, "lxml")
     regex = re.compile('.*/pub/time.series/.*')
     elements = soup.findAll('a' , {"href": regex})
