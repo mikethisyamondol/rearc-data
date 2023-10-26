@@ -31,7 +31,7 @@ def lambda_handler(event, context):
     df.to_csv('/tmp/'+filename+".csv", index=False)
 
     s3 = boto3.resource('s3')    
-    s3.Bucket(bucketname).upload_file('/tmp/'+filename, prefix+filename)
+    s3.Bucket(bucketname).upload_file('/tmp/'+filename+".csv", prefix+filename+".csv")
 
     return {
             'statusCode': 200,

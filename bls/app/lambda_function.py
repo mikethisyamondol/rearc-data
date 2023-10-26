@@ -24,12 +24,12 @@ def lambda_handler(event, context):
     for f in files:
         response = requests.get(url+f, headers=headers)
         filename = f.replace(".", "_")
-        output = open(filename+'.csv', 'wb')
+        output = open('/tmp/'+filename+'.csv', 'wb')
         output.write(response.content)
         output.close()
 
         s3 = boto3.resource('s3')    
-        s3.Bucket(bucketname).upload_file('/tmp/'+filename, prefix+filename)
+        s3.Bucket(bucketname).upload_file('/tmp/'+filename+'.csv', prefix+filename+'.csv')
 
     return {
             'statusCode': 200,
