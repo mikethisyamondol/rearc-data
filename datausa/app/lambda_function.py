@@ -22,7 +22,7 @@ def lambda_handler(event, context):
 
     response = connect_to_endpoint(api)
 
-    # Check year returned
+    # Check year returned 
     # if response['data'][0]['Year'] == 
 
     df = pd.DataFrame.from_dict(response['data'])
