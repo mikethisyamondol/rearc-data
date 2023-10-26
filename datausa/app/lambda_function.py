@@ -28,7 +28,7 @@ def lambda_handler(event, context):
     # if response['data'][0]['Year'] ==       
 
     df = pd.DataFrame.from_dict(response['data'])
-    df.to_csv(f"{filename}.csv", index=False)
+    df.to_csv('/tmp/'+filename+".csv", index=False)
 
     s3 = boto3.resource('s3')    
     s3.Bucket(bucketname).upload_file('/tmp/'+filename, prefix+filename)
