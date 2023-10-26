@@ -18,7 +18,7 @@ jobs:
           echo '${{ secrets.AWS_CREDENTIALS_FILE }}' > ./.aws/credentials
     - name: zip
       run: |
-          cd datausa
+          cd bls
           pip install --target . requests
           zip -r bls_lambda_function.zip *
 
