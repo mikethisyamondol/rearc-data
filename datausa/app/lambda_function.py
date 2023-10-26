@@ -2,7 +2,7 @@ import requests
 import io
 import json
 import pandas as pd
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 import boto3
 import csv
 import re
