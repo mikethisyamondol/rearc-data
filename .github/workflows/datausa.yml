@@ -1,1 +1,32 @@
+name: datausa-ingest-lambda
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'datausa/**'
 
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup AWS
+      run: |
+          mkdir ./.aws
+          touch ./.aws/credentials
+          echo '${{ secrets.AWS_CREDENTIALS_FILE }}' > ./.aws/credentials
+    - name: zip
+      run: |
+          cd datausa
+          pip install --target . requests
+          zip -r datausa_lambda_function.zip *
+
+    - name: sync to s3
+      env:
+        AWS_SHARED_CREDENTIALS_FILE: ./.aws/credentials
+        AWS_PROFILE: default
+        AWS_DEFAULT_REGION: us-east-2
+      run: |
+        aws s3 cp ./datausa/datausa_lambda_function.zip s3://mthis-rearc/datausa/datausa_lambda_function.zip
+        aws lambda update-function-code --function-name datausa-ingest --s3-bucket mthis-rearc --s3-key datausa/datausa_lambda_function.zip --region us-east-2
